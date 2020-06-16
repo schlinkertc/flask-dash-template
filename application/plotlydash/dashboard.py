@@ -7,7 +7,7 @@ import pandas as pd
 import numpy as np
 from .layout import html_layout
 import plotly.graph_objects as go
-
+from application import db
 
 def create_dashboard(server):
     """Create a Dash app"""
@@ -16,7 +16,7 @@ def create_dashboard(server):
                         external_stylesheets=['/static/dist/css/styles.css']
                         )
     # Prepare a dataset
-    df = pd.read_csv('data/businesses_yelp.csv')
+    df = pd.read_sql_table('stores',schema='sales',con=db.engine)
     
     # Custom HTML layout
     dash_app.index_sting = html_layout
@@ -25,9 +25,7 @@ def create_dashboard(server):
     # Create layout 
     dash_app.layout = html.Div(
         children = [
-         create_data_table(df[
-             ['name','categories','price','display_phone','display_address']
-         ])
+         create_data_table(df)
         ],
         id='dash-container'
     )

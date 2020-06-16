@@ -9,7 +9,7 @@ db = SQLAlchemy()
 def create_app():
     """Construct core Flask application with embedded Dash app."""
     app = Flask(__name__, instance_relative_config=False)
-    app.config.from_object('config.Config')
+    app.config.from_object('config.DevelopmentConfig')
     #app.config.from_pyfile('config.py')
     
     db.init_app(app)
